@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotpot.mapper.IngredientMapper">
+
+    <!-- 复杂查询可以在这里定义 -->
+    <select id="findLowStockIngredients" resultType="com.hotpot.entity.Ingredient">
+        SELECT i.*, s.quantity as current_stock
+        FROM ingredient i
+                 LEFT JOIN stock s ON i.id = s.ingredient_id
+        WHERE s.quantity &lt; i.min_stock
+        ORDER BY s.quantity / i.min_stock
+    </select>
+
+</mapper>
